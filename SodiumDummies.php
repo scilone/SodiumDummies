@@ -44,12 +44,30 @@ class SodiumDummies
     {
         switch ($type) {
             case 'kx':
-                return sodium_crypto_kx_seed_keypair(md5($text));
+                return sodium_crypto_kx_seed_keypair(
+                    sodium_crypto_generichash(
+                        $text,
+                        '',
+                        SODIUM_CRYPTO_KX_BYTES
+                    )
+                );
             case 'sign':
-                return sodium_crypto_sign_seed_keypair(md5($text));
+                return sodium_crypto_sign_seed_keypair(
+                    sodium_crypto_generichash(
+                        $text,
+                        '',
+                        SODIUM_CRYPTO_SIGN_BYTES
+                    )
+                );
             case 'box':
             case '':
-                return sodium_crypto_box_seed_keypair(md5($text));
+                return sodium_crypto_box_seed_keypair(
+                    sodium_crypto_generichash(
+                        $text,
+                        '',
+                        SODIUM_CRYPTO_AUTH_KEYBYTES
+                    )
+                );
             default:
                 throw new Exception('Unknown type');
 
