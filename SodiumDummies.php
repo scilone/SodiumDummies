@@ -65,7 +65,7 @@ class SodiumDummies
                     sodium_crypto_generichash(
                         $text,
                         '',
-                        SODIUM_CRYPTO_AUTH_KEYBYTES
+                        SODIUM_CRYPTO_BOX_SEEDBYTES
                     )
                 );
             default:
